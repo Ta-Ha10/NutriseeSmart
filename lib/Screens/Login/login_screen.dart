@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'reset_password_email.dart';
+import 'package:flutter/material.dart';
+
 import '../Signup/birth_screen.dart'; // added import
+import 'reset_password_email.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -10,9 +11,10 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 80),
@@ -23,7 +25,6 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     Image.asset('assets/logo.png', height: 160),
                     const SizedBox(height: 8),
-    
                   ],
                 ),
               ),
@@ -131,6 +132,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(height: 24),
             ],
           ),
         ),

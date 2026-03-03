@@ -21,88 +21,38 @@ class _GenderScreenState extends State<GenderScreen> {
         color: Colors.white,
         child: Scaffold(
           backgroundColor: Color(0xffF2EDE9),
-          body: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                    Gap(30),
-                Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.arrow_back_ios),
-                      color: Colors.black,
-                      iconSize: 28,
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    Gap(50),
-                    AnimatedIndicator(
-                      activeIndex: 1,
-                      count: 10,
-                      animationDuration: const Duration(milliseconds: 400),
-                      activeColor: const Color(0xff13EC5B),
-                      inactiveColor: const Color(0xFFCCCCCC),
-                      dotSize: 10.0,
-                    ),
-                    const Spacer(),
-                  ],
-                ),
-                Gap(60),
-                RichText(
-                  textAlign: TextAlign.start,
-                  text: TextSpan(
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                    
+          body: SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Gap(30),
+                  Row(
                     children: [
-                      const TextSpan(text: "What's your " , style: TextStyle(fontSize: 29),),
-                      TextSpan(
-                        text: "Gender",
-                        style: const TextStyle(color: Colors.green , fontSize: 29),
+                      IconButton(
+                        icon: Icon(Icons.arrow_back_ios),
+                        color: Colors.black,
+                        iconSize: 28,
+                        onPressed: () => Navigator.pop(context),
                       ),
-                      const TextSpan(text: " ?"),
-                    ],  
+                      Gap(50),
+                      AnimatedIndicator(
+                        activeIndex: 1,
+                        count: 10,
+                        animationDuration: const Duration(milliseconds: 400),
+                        activeColor: const Color(0xff13EC5B),
+                        inactiveColor: const Color(0xFFCCCCCC),
+                        dotSize: 10.0,
+                      ),
+                      const Spacer(),
+                    ],
                   ),
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  "This helps us calculate your metabolic rate BMR) and personalize your fitness plan accurately.",
-                  style: TextStyle(fontSize: 15, color: Colors.black54),
-                  textAlign: TextAlign.center  ,
-                ),
-                
-                const SizedBox(height: 100),
-                
-                // Gender cards with images
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround, 
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => _select("male"),
-                        child: _GenderImageCard(
-                          imagePath: 'assets/Photoes/male.png',
-                          label: "Male",
-                          selected: _selected == "male",
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => _select("female"),
-                        child: _GenderImageCard(
-                          imagePath: 'assets/Photoes/female.png',
-                          label: "Female",
-                          selected: _selected == "female",
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  Gap(60),
+                  RichText(
+                    textAlign: TextAlign.start,
+                    text: TextSpan(
+                      style: const TextStyle(
 
                 const Spacer(),
                 ElevatedButton(
@@ -129,7 +79,7 @@ class _GenderScreenState extends State<GenderScreen> {
             ),
           ),
         ),
-      
+
     );
   }
 }

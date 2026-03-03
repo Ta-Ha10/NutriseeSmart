@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/Screens/Login/reset_password_phone..dart';
+
 import 'new_password_screen.dart';
 
 class ResetPasswordEmail extends StatelessWidget {
@@ -9,51 +10,56 @@ class ResetPasswordEmail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(leading: const BackButton()),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Reset Password",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              "Don't worry, it happens. Enter your details below and we will send you a code to reset it",
-            ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Reset Password",
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                "Don't worry, it happens. Enter your details below and we will send you a code to reset it",
+              ),
 
-            const SizedBox(height: 30),
+              const SizedBox(height: 30),
 
-            Row(
-              children: [
-                _tab("Email", true),
-                _tab("Phone", false, onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const ResetPasswordPhone(),
-                    ),
-                  );
-                }),
-              ],
-            ),
+              Row(
+                children: [
+                  _tab("Email", true),
+                  _tab(
+                    "Phone",
+                    false,
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const ResetPasswordPhone(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
 
-            const SizedBox(height: 20),
-            const Text("Email Address"),
-            const SizedBox(height: 6),
-            _inputField("user@example.com"),
+              const SizedBox(height: 20),
+              const Text("Email Address"),
+              const SizedBox(height: 6),
+              _inputField("user@example.com"),
 
-            const Spacer(),
-            _greenButton("Send Reset Code", () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const NewPasswordScreen(),
-                ),
-              );
-            }),
-          ],
+              const SizedBox(height: 24),
+              _greenButton("Send Reset Code", () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const NewPasswordScreen()),
+                );
+              }),
+            ],
+          ),
         ),
       ),
     );
@@ -73,9 +79,7 @@ class ResetPasswordEmail extends StatelessWidget {
           child: Center(
             child: Text(
               text,
-              style: TextStyle(
-                color: active ? Colors.green : Colors.black,
-              ),
+              style: TextStyle(color: active ? Colors.green : Colors.black),
             ),
           ),
         ),
@@ -87,9 +91,7 @@ class ResetPasswordEmail extends StatelessWidget {
     return TextField(
       decoration: InputDecoration(
         hintText: hint,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
       ),
     );
   }
