@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "71760229075",
+    "project_id": "nutriseesmart-d7462",
+    "storage_bucket": "nutriseesmart-d7462.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:71760229075:android:33572d504dd59e5c2e5a26",
+        "android_client_info": {
+          "package_name": "com.example.nutriseesmart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "71760229075-4eae88kb8j7ouisd709p6j110laqdcsr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyEI-tRBdtWmTUXzYXm_fiVNUg4nOSyic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "71760229075-4eae88kb8j7ouisd709p6j110laqdcsr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

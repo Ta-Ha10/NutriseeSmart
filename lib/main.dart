@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/Screens/Signup/activity_screen.dart';
-import 'package:untitled1/Screens/Signup/birth_screen.dart';
-import 'package:untitled1/Screens/Signup/current_weight_screen.dart' show CurrentWeightScreen;
-import 'package:untitled1/Screens/Signup/goal_weight_screen.dart';
-import 'package:untitled1/Screens/Signup/loading_screen.dart';
-import 'package:untitled1/Screens/Signup/meal_goal_screen.dart';
-import 'package:untitled1/Screens/Signup/obesity_screen.dart';
-import 'package:untitled1/Screens/Signup/review_screen.dart';
-import 'package:untitled1/Screens/Signup/success_screen.dart';
-import 'package:untitled1/Screens/Signup/navigator.dart';
-import 'package:untitled1/main/home_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'Screens/Signup/birth_screen.dart';
+import 'Screens/Signup/current_weight_screen.dart' show CurrentWeightScreen;
+import 'Screens/Signup/goal_weight_screen.dart';
+import 'Screens/Signup/loading_screen.dart';
+import 'Screens/Signup/meal_goal_screen.dart';
+import 'Screens/Signup/obesity_screen.dart';
+import 'Screens/Signup/review_screen.dart';
+import 'Screens/Signup/navigator.dart';
+import 'Screens/Signup/success_screen.dart';
+import 'Screens/Signup/auth_method_screen.dart';
+import 'main/home_screen.dart';
 import 'Screens/Login/login_screen.dart';
+import 'Screens/Signup/activity_screen.dart';
 import 'Screens/Splash_Screen.dart';
 import 'utils/page_transitions.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
@@ -50,6 +57,7 @@ class MyApp extends StatelessWidget {
         '/meal_goal': (context) => const MealGoalScreen(),
         '/loading': (context) => const LoadingScreen(),
         '/review': (context) => const ReviewScreen(),
+        '/auth_method': (context) => const AuthMethodScreen(),
         '/success': (context) => const SuccessScreen(),
         '/home' : (context) => const HomeScreen(),
       },
@@ -78,6 +86,8 @@ class MyApp extends StatelessWidget {
         return const LoadingScreen();
       case '/review':
         return const ReviewScreen();
+      case '/auth_method':
+        return const AuthMethodScreen();
       case '/success':
         return const SuccessScreen();
       case '/home':

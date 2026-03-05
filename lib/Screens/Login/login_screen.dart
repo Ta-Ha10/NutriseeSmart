@@ -1,11 +1,89 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-import '../Signup/birth_screen.dart'; // added import
+import '../Signup/birth_screen.dart';
 import 'reset_password_email.dart';
-
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _isLoading = false;
+  String? _errorMessage;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _signIn() async {
+    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+      setState(() {
+        _errorMessage = 'Please fill in all fields';
+      });
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
+    try {
+      final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+      );
+
+      if (userCredential.user != null) {
+        if (mounted) {
+          // Navigate to home screen after successful login
+          Navigator.pushReplacementNamed(context, '/home');
+        }
+      }
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        _errorMessage = _getErrorMessage(e.code);
+      });
+    } catch (e) {
+      setState(() {
+        _errorMessage = 'An unexpected error occurred. Please try again.';
+      });
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  String _getErrorMessage(String errorCode) {
+    switch (errorCode) {
+      case 'user-not-found':
+        return 'No account found with this email address.';
+      case 'wrong-password':
+        return 'Incorrect password.';
+      case 'invalid-email':
+        return 'Please enter a valid email address.';
+      case 'user-disabled':
+        return 'This account has been disabled.';
+      case 'too-many-requests':
+        return 'Too many failed attempts. Please try again later.';
+      case 'network-request-failed':
+        return 'Network error. Please check your internet connection.';
+      default:
+        return 'Login failed. Please try again.';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +135,33 @@ class LoginScreen extends StatelessWidget {
 
               const SizedBox(height: 30),
 
-              _inputField("Email or Phone Number"),
+              _inputField("Email", controller: _emailController),
               const SizedBox(height: 16),
-              _inputField("Password", isPassword: true),
+              _inputField("Password", isPassword: true, controller: _passwordController),
+
+              if (_errorMessage != null) ...[
+                const SizedBox(height: 16),
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.red.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.red.withOpacity(0.3)),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.error, color: Colors.red, size: 20),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          _errorMessage!,
+                          style: const TextStyle(color: Colors.red, fontSize: 14),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
 
               Align(
                 alignment: Alignment.centerRight,
@@ -81,9 +183,9 @@ class LoginScreen extends StatelessWidget {
 
               const SizedBox(height: 10),
 
-              _greenButton("Log In", () {
-                // Navigate to BirthScreen after login
-              }),
+              _isLoading
+                  ? const CircularProgressIndicator(color: Colors.green)
+                  : _greenButton("Log In", _signIn),
 
               const SizedBox(height: 20),
 
@@ -140,9 +242,11 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _inputField(String hint, {bool isPassword = false}) {
+  Widget _inputField(String hint, {bool isPassword = false, TextEditingController? controller}) {
     return TextField(
+      controller: controller,
       obscureText: isPassword,
+      enabled: !_isLoading,
       decoration: InputDecoration(
         hintText: hint,
         suffixIcon: isPassword ? const Icon(Icons.visibility_outlined) : null,
