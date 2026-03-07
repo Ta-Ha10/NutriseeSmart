@@ -11,8 +11,10 @@ class CustomPageTransitions {
         const end = Offset.zero;
         const curve = Curves.easeInOutCubic;
 
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween = Tween(
+          begin: begin,
+          end: end,
+        ).chain(CurveTween(curve: curve));
         var offsetAnimation = animation.drive(tween);
 
         return SlideTransition(position: offsetAnimation, child: child);
@@ -46,8 +48,10 @@ class CustomPageTransitions {
         const end = Offset.zero;
         const curve = Curves.easeInOutCubic;
 
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween = Tween(
+          begin: begin,
+          end: end,
+        ).chain(CurveTween(curve: curve));
         var slideAnimation = animation.drive(tween);
 
         var fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -69,9 +73,10 @@ class CustomPageTransitions {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => page,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        var scaleAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-          CurvedAnimation(parent: animation, curve: Curves.elasticOut),
-        );
+        var scaleAnimation = Tween<double>(
+          begin: 0.0,
+          end: 1.0,
+        ).animate(CurvedAnimation(parent: animation, curve: Curves.elasticOut));
 
         var fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
           CurvedAnimation(parent: animation, curve: Curves.easeInOutQuad),

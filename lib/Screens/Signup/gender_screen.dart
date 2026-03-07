@@ -18,68 +18,87 @@ class _GenderScreenState extends State<GenderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Scaffold(
-        backgroundColor: Color(0xffF2EDE9),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Gap(30),
-                Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.arrow_back_ios),
-                      color: Colors.black,
-                      iconSize: 28,
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    Gap(50),
-                    AnimatedIndicator(
-                      activeIndex: 1,
-                      count: 10,
-                      animationDuration: const Duration(milliseconds: 400),
-                      activeColor: const Color(0xff13EC5B),
-                      inactiveColor: const Color(0xFFCCCCCC),
-                      dotSize: 10.0,
-                    ),
-                    const Spacer(),
-                  ],
-                ),
-                Gap(60),
-
-                const Spacer(),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: _selected != null
-                        ? Colors.green
-                        : Colors.grey,
-                    minimumSize: const Size(double.infinity, 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+    return Scaffold(
+      backgroundColor: Color(0xffF2EDE9),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.arrow_back_ios),
+                    color: Colors.black,
+                    iconSize: 28,
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  Gap(50),
+                  AnimatedIndicator(
+                    activeIndex: 1,
+                    count: 10,
+                    animationDuration: const Duration(milliseconds: 400),
+                    activeColor: const Color(0xff13EC5B),
+                    inactiveColor: const Color(0xFFCCCCCC),
+                    dotSize: 10.0,
+                  ),
+                  const Spacer(),
+                ],
+              ),
+              Gap(60),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => _select("male"),
+                      child: _GenderImageCard(
+                        imagePath: "assets/Photoes/male.png",
+                        label: "Male",
+                        selected: _selected == "male",
+                      ),
                     ),
                   ),
-                  onPressed: _selected == null
-                      ? null
-                      : () {
-                          Navigator.push(
-                            context,
-                            CustomPageTransitions.slideAndFadeTransition(
-                              HeightScreen(gender: _selected),
-                            ),
-                          );
-                        },
-                  child: const Text(
-                    "Next",
-                    style: TextStyle(color: Colors.black),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => _select("female"),
+                      child: _GenderImageCard(
+                        imagePath: "assets/Photoes/female.png",
+                        label: "Female",
+                        selected: _selected == "female",
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Gap(60),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _selected != null
+                      ? Colors.green
+                      : Colors.grey,
+                  minimumSize: const Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                Gap(50),
-              ],
-            ),
+                onPressed: _selected == null
+                    ? null
+                    : () {
+                        Navigator.push(
+                          context,
+                          CustomPageTransitions.slideAndFadeTransition(
+                            HeightScreen(gender: _selected),
+                          ),
+                        );
+                      },
+                child: const Text(
+                  "Next",
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -106,7 +125,7 @@ class _GenderImageCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           // Image
-          Image.asset(imagePath, height: 400, fit: BoxFit.contain),
+          Image.asset(imagePath, height: 150, fit: BoxFit.contain),
           const SizedBox(height: 12),
           // Label
           Text(
